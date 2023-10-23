@@ -1,9 +1,6 @@
 package com.example.pub.models;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -14,12 +11,24 @@ public class Order {
     private Long productId;
     private int amount;
     private double price;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Order(Long id, Long productId, int amount, double price) {
+    public Order(Long id, Long productId, int amount, double price, User user) {
         this.id = id;
         this.productId = productId;
         this.amount = amount;
         this.price = price;
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Order() {

@@ -2,6 +2,8 @@ package com.example.pub.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class User {
     @Id
@@ -11,13 +13,16 @@ public class User {
     private boolean isActive;
     private boolean isAdult;
     private double pocket;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Order> orders;
 
-    public User(Long id, String name, boolean isActive, boolean isAdult, double pocket) {
+    public User(Long id, String name, boolean isActive, boolean isAdult, double pocket, List<Order> orders) {
         this.id = id;
         this.name = name;
         this.isActive = isActive;
         this.isAdult = isAdult;
         this.pocket = pocket;
+        this.orders = orders;
     }
 
     public User() {
@@ -61,5 +66,13 @@ public class User {
 
     public void setPocket(double pocket) {
         this.pocket = pocket;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }
