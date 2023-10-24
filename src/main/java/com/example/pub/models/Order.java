@@ -2,32 +2,25 @@ package com.example.pub.models;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 
 @Entity
+@Table(name = "orders")             //table name "order" can not be used, it creates conflict with mySQL.
 public class Order {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long productId;
+    private String productName;
     private int amount;
     private double price;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Order(Long id, Long productId, int amount, double price, User user) {
+    public Order(Long id, String productName, int amount, double price, User user) {
         this.id = id;
-        this.productId = productId;
+        this.productName = productName;
         this.amount = amount;
         this.price = price;
-        this.user = user;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
         this.user = user;
     }
 
@@ -42,12 +35,12 @@ public class Order {
         this.id = id;
     }
 
-    public Long getProductId() {
-        return productId;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public int getAmount() {
@@ -64,5 +57,13 @@ public class Order {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
