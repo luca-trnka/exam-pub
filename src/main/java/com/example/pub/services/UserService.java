@@ -17,6 +17,7 @@ public interface UserService {
     List<User> getAllUsers();
 
     Optional<User> findUserById(Long id);
+    Optional<User> findUserByName(String name);
 
     UserProfileDTO createUserDTO(User user);
     ResponseEntity<?> getUserProfile (Long id);

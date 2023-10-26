@@ -50,12 +50,17 @@ public class MainController {
 
     @GetMapping("summary/all")
     public ResponseEntity<?> getAllDrinkInformation() {
-        return ResponseEntity.status(200).body(orderService.drinkInfoSummary());
+        return ResponseEntity.status(200).body(orderService.allDrinkInfoSummary());
     }
 
     @GetMapping("/summary/product")
     public ResponseEntity<?> getSummaryOfChosenDrink(@RequestParam("productName") String productName) {
         return orderService.findOrdersByProductName(productName);
+    }
+
+    @GetMapping("/summary/user")
+    public ResponseEntity<?> getSummaryOfChosenUser(@RequestParam("userName") String userName) {
+        return orderService.findOrdersByUserName(userName);
     }
 
 }

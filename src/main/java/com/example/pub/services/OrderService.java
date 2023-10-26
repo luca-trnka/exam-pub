@@ -12,6 +12,7 @@ public interface OrderService {
 
     ResponseEntity<?> buyDrinkValidation (Long user_id, Long drink_id, int amount);
 
-    List<AllSummaryDTO> drinkInfoSummary();
+    List<AllSummaryDTO> allDrinkInfoSummary();
     ResponseEntity<?> findOrdersByProductName(String productName);
+    ResponseEntity<?> findOrdersByUserName(String name);
 }

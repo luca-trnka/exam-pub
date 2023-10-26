@@ -51,6 +51,11 @@ public class UserServiceImpl implements UserService {
         return Optional.ofNullable(userRepo.findUserById(id));
     }
 
+    @Override
+    public Optional<User> findUserByName(String name) {
+        return Optional.ofNullable(userRepo.findUserByName(name));
+    }
+
     public UserProfileDTO createUserDTO(User user) {
         Hibernate.initialize(user.getOrders());
         List<OrderDTO> orderDTOs = user.getOrders().stream()
@@ -70,8 +75,5 @@ public class UserServiceImpl implements UserService {
            return ResponseEntity.status(404).body("This user doesn't exist:(.");
         }
     }
-
-
-
 
 }

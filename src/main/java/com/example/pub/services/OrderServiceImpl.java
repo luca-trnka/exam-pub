@@ -2,6 +2,7 @@ package com.example.pub.services;
 
 import com.example.pub.dtos.AllSummaryDTO;
 import com.example.pub.dtos.DrinkSummaryDTO;
+import com.example.pub.dtos.UserSummaryDTO;
 import com.example.pub.models.Drink;
 import com.example.pub.models.Order;
 import com.example.pub.models.User;
@@ -55,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<AllSummaryDTO> drinkInfoSummary() {
+    public List<AllSummaryDTO> allDrinkInfoSummary() {
 
         List<AllSummaryDTO> drinkInfoList = new ArrayList<>();
         List<Drink> drinks = drinkRepo.findAll();
@@ -98,5 +99,26 @@ public class OrderServiceImpl implements OrderService {
     } else {
             return ResponseEntity.status(400).body("There is no such a drink here.");
         }
+    }
+
+    @Override
+    public ResponseEntity<?> findOrdersByUserName (String name) {
+        Optional<User> checkedUser = Optional.ofNullable(userRepo.findUserByName(name));
+
+        if (checkedUser.isPresent()) {
+            List<UserSummaryDTO> summaryList = new ArrayList<>();
+            List<Order> orders = orderRepo.findAllByUserId(checkedUser.get().getId());
+
+            for (Order order : orders) {
+                Drink drink = drinkRepo.findByProductName(order.getProductName());
+                if (drink != null) {
+                    UserSummaryDTO userSummary = new UserSummaryDTO(drink.getProductName(), order.getAmount()*order.getPrice());
+                    summaryList.add(userSummary);
+                }
+            }
+            return ResponseEntity.status(200).body(summaryList);
+        } else {
+            return ResponseEntity.status(400).body("There is no such an user here.");
         }
+    }
 }
