@@ -72,9 +72,4 @@ public class Order {
     public void setUser(User user) {
         this.user = user;
     }
-
-    public void dataForSummary (double price, int amount) {
-        price += price*amount;
-        amount += amount;
-    }
 }

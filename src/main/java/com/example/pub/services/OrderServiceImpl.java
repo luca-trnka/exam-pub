@@ -112,7 +112,7 @@ public class OrderServiceImpl implements OrderService {
             for (Order order : orders) {
                 Drink drink = drinkRepo.findByProductName(order.getProductName());
                 if (drink != null) {
-                    UserSummaryDTO userSummary = new UserSummaryDTO(drink.getProductName(), order.getAmount()*order.getPrice());
+                    UserSummaryDTO userSummary = new UserSummaryDTO(drink.getProductName(), order.getPrice());
                     summaryList.add(userSummary);
                 }
             }
