@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
             UserProfileDTO foundUser = createUserDTO(user.get());
             return ResponseEntity.status(200).body(foundUser);
         } else {
-            return ResponseEntity.status(404).build();
+           return ResponseEntity.status(404).body("This user doesn't exist:(.");
         }
     }
 

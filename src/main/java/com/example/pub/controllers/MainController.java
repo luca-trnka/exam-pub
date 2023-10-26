@@ -3,12 +3,11 @@ package com.example.pub.controllers;
 import com.example.pub.dtos.UserDTO;
 import com.example.pub.models.Drink;
 import com.example.pub.services.DrinkService;
+import com.example.pub.services.OrderService;
 import com.example.pub.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,12 +16,13 @@ public class MainController {
 
     private final UserService userService;
     private final DrinkService drinkService;
-
+    private final OrderService orderService;
 
     @Autowired
-    public MainController(UserService userService, DrinkService drinkService) {
+    public MainController(UserService userService, DrinkService drinkService, OrderService orderService) {
         this.userService = userService;
         this.drinkService = drinkService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/users")
@@ -39,4 +39,11 @@ public class MainController {
     public ResponseEntity<List<Drink>> getDrinkMenu() {
         return ResponseEntity.status(200).body(drinkService.getAllDrinks());
     }
+
+    @PostMapping("/buy")
+    public ResponseEntity<?> canThisUserBuyThis(@RequestParam Long user_id, @RequestParam Long drink_id,
+                                                @RequestParam int amount) {
+        return orderService.buyDrinkValidation(user_id, drink_id, amount);
+    }
+
 }
