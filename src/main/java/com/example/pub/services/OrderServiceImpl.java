@@ -1,6 +1,8 @@
 package com.example.pub.services;
 
+import com.example.pub.dtos.DrinkInfoDTO;
 import com.example.pub.models.Drink;
+import com.example.pub.models.Order;
 import com.example.pub.models.User;
 import com.example.pub.repos.DrinkRepo;
 import com.example.pub.repos.OrderRepo;
@@ -9,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -49,6 +51,32 @@ public class OrderServiceImpl implements OrderService {
             }
             return ResponseEntity.status(200).body("Let's Get Ready to Rumble :)!");
         }
-
     }
+
+    @Override
+    public List<DrinkInfoDTO> drinkInfoSummary() {
+
+        List<DrinkInfoDTO> drinkInfoList = new ArrayList<>();
+        List<Drink> drinks = drinkRepo.findAll();
+
+        for (Drink drink : drinks) {
+            drinkInfoList.add(new DrinkInfoDTO(drink));
+        }
+
+        List<Order> orders = orderRepo.findAll();
+
+        for (Order order : orders) {
+            String productName = order.getProductName();
+            int orderAmount = order.getAmount();
+
+            for (DrinkInfoDTO drinkInfo : drinkInfoList) {
+                if (Objects.equals(productName, drinkInfo.getProductName())) {
+                    drinkInfo.addingNewAmount(orderAmount);
+                    drinkInfo.sumOfSummaryPrice();
+                }
+            }
+        }
+        return drinkInfoList;
+    }
+
 }

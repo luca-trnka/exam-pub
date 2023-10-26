@@ -46,4 +46,9 @@ public class MainController {
         return orderService.buyDrinkValidation(user_id, drink_id, amount);
     }
 
+    @GetMapping("summary/all")
+    public ResponseEntity<?> getAllDrinkInformation() {
+        return ResponseEntity.status(200).body(orderService.drinkInfoSummary());
+    }
+
 }

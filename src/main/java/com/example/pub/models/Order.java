@@ -12,7 +12,7 @@ public class Order {
     private String productName;
     private int amount;
     private double price;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -22,6 +22,12 @@ public class Order {
         this.amount = amount;
         this.price = price;
         this.user = user;
+    }
+
+    public Order(Drink drink, int amount) {
+        this.productName = drink.getProductName();
+        this.amount = amount;
+        this.price = drink.getPrice() * amount;
     }
 
     public Order() {
@@ -65,5 +71,10 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void dataForSummary (double price, int amount) {
+        price += price*amount;
+        amount += amount;
     }
 }
