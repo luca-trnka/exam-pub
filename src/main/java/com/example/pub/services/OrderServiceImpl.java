@@ -1,6 +1,7 @@
 package com.example.pub.services;
 
-import com.example.pub.dtos.DrinkInfoDTO;
+import com.example.pub.dtos.AllSummaryDTO;
+import com.example.pub.dtos.DrinkSummaryDTO;
 import com.example.pub.models.Drink;
 import com.example.pub.models.Order;
 import com.example.pub.models.User;
@@ -54,13 +55,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<DrinkInfoDTO> drinkInfoSummary() {
+    public List<AllSummaryDTO> drinkInfoSummary() {
 
-        List<DrinkInfoDTO> drinkInfoList = new ArrayList<>();
+        List<AllSummaryDTO> drinkInfoList = new ArrayList<>();
         List<Drink> drinks = drinkRepo.findAll();
 
         for (Drink drink : drinks) {
-            drinkInfoList.add(new DrinkInfoDTO(drink));
+            drinkInfoList.add(new AllSummaryDTO(drink));
         }
 
         List<Order> orders = orderRepo.findAll();
@@ -69,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
             String productName = order.getProductName();
             int orderAmount = order.getAmount();
 
-            for (DrinkInfoDTO drinkInfo : drinkInfoList) {
+            for (AllSummaryDTO drinkInfo : drinkInfoList) {
                 if (Objects.equals(productName, drinkInfo.getProductName())) {
                     drinkInfo.addingNewAmount(orderAmount);
                     drinkInfo.sumOfSummaryPrice();
@@ -79,4 +80,23 @@ public class OrderServiceImpl implements OrderService {
         return drinkInfoList;
     }
 
+    public ResponseEntity<?> findOrdersByProductName(String productName) {
+        Optional<Drink> checkedDrink = Optional.ofNullable(drinkRepo.findByProductName(productName));
+
+        if (checkedDrink.isPresent()) {
+        List<DrinkSummaryDTO> summaryList = new ArrayList<>();
+        List<Order> orders = orderRepo.findAllByProductName(productName);
+
+        for (Order order : orders) {
+            User user = userRepo.findById(order.getUser().getId()).orElse(null);
+            if (user != null) {
+                DrinkSummaryDTO drinkSummary = new DrinkSummaryDTO(user.getId(), order.getAmount(), order.getPrice());
+                summaryList.add(drinkSummary);
+            }
+        }
+        return ResponseEntity.status(200).body(summaryList);
+    } else {
+            return ResponseEntity.status(400).body("There is no such a drink here.");
+        }
+        }
 }

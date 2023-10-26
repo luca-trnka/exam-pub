@@ -2,19 +2,19 @@ package com.example.pub.dtos;
 
 import com.example.pub.models.Drink;
 
-public class DrinkInfoDTO {
+public class AllSummaryDTO {
 
         private String productName;
         private int amount;
         private double unitPrice;
         private double summaryPrice;
 
-        public DrinkInfoDTO(Drink drink) {
+        public AllSummaryDTO(Drink drink) {
             this.productName = drink.getProductName();
             this.unitPrice = drink.getPrice();
         }
 
-    public DrinkInfoDTO() {
+    public AllSummaryDTO() {
     }
 
     public String getProductName() {

@@ -2,6 +2,7 @@ package com.example.pub.controllers;
 
 import com.example.pub.dtos.UserDTO;
 import com.example.pub.models.Drink;
+import com.example.pub.models.Order;
 import com.example.pub.services.DrinkService;
 import com.example.pub.services.OrderService;
 import com.example.pub.services.UserService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -49,6 +51,11 @@ public class MainController {
     @GetMapping("summary/all")
     public ResponseEntity<?> getAllDrinkInformation() {
         return ResponseEntity.status(200).body(orderService.drinkInfoSummary());
+    }
+
+    @GetMapping("/summary/product")
+    public ResponseEntity<?> getSummaryOfChosenDrink(@RequestParam("productName") String productName) {
+        return orderService.findOrdersByProductName(productName);
     }
 
 }

@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface DrinkRepo extends JpaRepository <Drink, Long> {
 
     Drink findDrinkById(Long id);
+    Drink findByProductName(String productName);
 }

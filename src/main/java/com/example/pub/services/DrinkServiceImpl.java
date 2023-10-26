@@ -27,4 +27,9 @@ public class DrinkServiceImpl implements DrinkService {
     public Optional<Drink> findDrinkById (Long id) {
         return Optional.ofNullable(drinkRepo.findDrinkById(id));
     }
+
+    @Override
+    public Optional<Drink> findDrinkByProductName(String productName) {
+        return Optional.ofNullable(drinkRepo.findByProductName(productName));
+    }
 }

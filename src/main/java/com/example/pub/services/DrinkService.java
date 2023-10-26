@@ -11,4 +11,5 @@ public interface DrinkService {
 
     List<Drink> getAllDrinks();
     Optional<Drink> findDrinkById (Long id);
+    Optional<Drink> findDrinkByProductName (String productName);
 }
