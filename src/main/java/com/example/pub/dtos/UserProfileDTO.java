@@ -1,39 +1,28 @@
-package com.example.pub.models;
+package com.example.pub.dtos;
 
-import jakarta.persistence.*;
+import com.example.pub.models.Order;
 
 import java.util.List;
 
-@Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserProfileDTO {
+
     private Long id;
     private String name;
     private boolean isActive;
     private boolean isAdult;
     private double pocket;
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<Order> orders;
+    private List<OrderDTO> orders;
 
-    public User(Long id, String name, boolean isActive, boolean isAdult, double pocket, List<Order> orders) {
+    public UserProfileDTO() {
+    }
+
+    public UserProfileDTO(Long id, String name, boolean isActive, boolean isAdult, double pocket, List<OrderDTO> orders) {
         this.id = id;
         this.name = name;
         this.isActive = isActive;
         this.isAdult = isAdult;
         this.pocket = pocket;
         this.orders = orders;
-    }
-
-    public User(Long id, String name, boolean isActive, boolean isAdult, double pocket) {
-        this.id = id;
-        this.name = name;
-        this.isActive = isActive;
-        this.isAdult = isAdult;
-        this.pocket = pocket;
-    }
-
-    public User() {
     }
 
     public Long getId() {
@@ -76,12 +65,13 @@ public class User {
         this.pocket = pocket;
     }
 
-    public List<Order> getOrders() {
+    public List<OrderDTO> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(List<OrderDTO> orders) {
         this.orders = orders;
     }
-
 }
+
+

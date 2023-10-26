@@ -1,30 +1,20 @@
-package com.example.pub.models;
+package com.example.pub.dtos;
 
-import jakarta.persistence.*;
+public class OrderDTO {
 
-
-@Entity
-@Table(name = "orders")             //table name "order" can not be used, it creates conflict with mySQL.
-public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String productName;
     private int amount;
     private double price;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
-    public Order(Long id, String productName, int amount, double price, User user) {
+    public OrderDTO() {
+    }
+
+    public OrderDTO(Long id, String productName, int amount, double price) {
         this.id = id;
         this.productName = productName;
         this.amount = amount;
         this.price = price;
-        this.user = user;
-    }
-
-    public Order() {
     }
 
     public Long getId() {
@@ -57,13 +47,5 @@ public class Order {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }
