@@ -10,6 +10,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String username;
+    private String password;
     private boolean isActive;
     private boolean isAdult;
     private double pocket;
@@ -33,6 +35,20 @@ public class User {
         this.pocket = pocket;
     }
 
+    public User(String username, String name, boolean isAdult, String password) {
+        this.username = username;
+        this.name = name;
+        this.isAdult = isAdult;
+        this.password = password;
+        this.pocket = 0;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+
     public User() {
     }
 
@@ -52,6 +68,21 @@ public class User {
         this.name = name;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
     public boolean isActive() {
         return isActive;
     }
