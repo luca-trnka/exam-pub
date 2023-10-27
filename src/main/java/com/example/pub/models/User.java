@@ -12,11 +12,16 @@ public class User {
     private String name;
     private String username;
     private String password;
+
     private boolean isActive;
     private boolean isAdult;
     private double pocket;
+    @Convert(converter = RoleConverter.class)
+    private Role role;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Order> orders;
+
+
 
     public User(Long id, String name, boolean isActive, boolean isAdult, double pocket, List<Order> orders) {
         this.id = id;
@@ -25,6 +30,7 @@ public class User {
         this.isAdult = isAdult;
         this.pocket = pocket;
         this.orders = orders;
+
     }
 
     public User(Long id, String name, boolean isActive, boolean isAdult, double pocket) {
@@ -33,6 +39,7 @@ public class User {
         this.isActive = isActive;
         this.isAdult = isAdult;
         this.pocket = pocket;
+
     }
 
     public User(String username, String name, boolean isAdult, String password) {
@@ -115,4 +122,11 @@ public class User {
         this.orders = orders;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

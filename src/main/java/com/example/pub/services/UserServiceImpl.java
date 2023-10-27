@@ -2,6 +2,7 @@ package com.example.pub.services;
 
 import com.example.pub.dtos.*;
 import com.example.pub.models.ErrorMessage;
+import com.example.pub.models.Role;
 import com.example.pub.models.User;
 import com.example.pub.repos.UserRepo;
 import org.hibernate.Hibernate;
@@ -101,6 +102,7 @@ public class UserServiceImpl implements UserService {
         User user = new User(newUserDTO.getUsername(), newUserDTO.getName(), newUserDTO.isAdult(), newUserDTO.getPassword());
         System.err.println(user);
         user.setActive(true);
+        user.setRole(Role.USER);
         userRepo.save(user);
         return ResponseEntity.status(200).body("User created.");
     }
